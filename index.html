@@ -6,6 +6,7 @@
 
 <style>
 body {
+  margin: 0;
   background: #0b1320;
   font-family: Arial;
   color: white;
@@ -24,12 +25,12 @@ h1 {
 }
 
 button {
-  padding: 20px;
+  padding: 18px;
   border-radius: 15px;
   border: none;
   background: #1c2a44;
   color: white;
-  font-size: 16px;
+  font-size: 14px;
 }
 
 /* PANEL */
@@ -55,10 +56,17 @@ button {
 <h1>SENSI ELITE 🔥</h1>
 
 <div class="botones">
-  <button onclick="abrirPanel('freestyle')">Sensi Freestyle</button>
-  <button onclick="abrirPanel('suprema')">Sensi Suprema</button>
-  <button onclick="abrirPanel('lgang')">Sensibilidad L-Gang</button>
-  <button onclick="abrirPanel('panel')">Sensi Panel</button>
+  <!-- NUEVAS -->
+  <button onclick="abrirPanel('dragon')">🐉 Dragon Headshot</button>
+  <button onclick="abrirPanel('demon')">😈 Demon Aimlock</button>
+  <button onclick="abrirPanel('ghost')">👻 Ghost Precision</button>
+  <button onclick="abrirPanel('toxic')">☠️ Toxic Destroyer</button>
+
+  <!-- ANTIGUAS -->
+  <button onclick="abrirPanel('freestyle')">🔥 Sensi Freestyle</button>
+  <button onclick="abrirPanel('suprema')">⚡ Sensi Suprema</button>
+  <button onclick="abrirPanel('lgang')">💀 Sensibilidad L-Gang</button>
+  <button onclick="abrirPanel('panel')">🎯 Sensi Panel</button>
 </div>
 
 <!-- PANEL -->
@@ -73,6 +81,46 @@ const contenido = document.getElementById("contenido");
 // ABRIR PANEL
 function abrirPanel(tipo) {
   panel.classList.add("activo");
+
+  if (tipo === "dragon") {
+    contenido.innerHTML = `
+      <h2>🐉 Dragon Headshot</h2>
+      General: 100<br>
+      Punto Rojo: 100<br>
+      Mira 2x: 95<br>
+      AWM: 80
+    `;
+  }
+
+  if (tipo === "demon") {
+    contenido.innerHTML = `
+      <h2>😈 Demon Aimlock</h2>
+      General: 99<br>
+      Punto Rojo: 95<br>
+      Mira 2x: 90<br>
+      AWM: 75
+    `;
+  }
+
+  if (tipo === "ghost") {
+    contenido.innerHTML = `
+      <h2>👻 Ghost Precision</h2>
+      General: 97<br>
+      Punto Rojo: 93<br>
+      Mira 2x: 88<br>
+      AWM: 70
+    `;
+  }
+
+  if (tipo === "toxic") {
+    contenido.innerHTML = `
+      <h2>☠️ Toxic Destroyer</h2>
+      General: 100<br>
+      Punto Rojo: 98<br>
+      Mira 2x: 92<br>
+      AWM: 78
+    `;
+  }
 
   if (tipo === "freestyle") {
     contenido.innerHTML = `

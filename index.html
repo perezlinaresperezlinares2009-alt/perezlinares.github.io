@@ -8,189 +8,217 @@
 body{
     margin:0;
     font-family:sans-serif;
-    background:#071421;
+    background:linear-gradient(#071421,#0a2a3f);
     color:white;
 }
 
-h1{
+/* HEADER */
+.header{
     padding:15px;
+    font-size:18px;
+    font-weight:bold;
 }
 
-/* MENU */
-.menu{
+/* TABS */
+.tabs{
     display:flex;
     gap:10px;
     padding:10px;
 }
 
-.menu button{
-    padding:10px;
-    border:none;
-    border-radius:15px;
+.tab{
+    padding:8px 15px;
+    border-radius:20px;
     background:#1c2b3a;
-    color:white;
+    cursor:pointer;
+}
+
+.active{
+    background:#19a7ce;
 }
 
 /* GRID */
 .grid{
     display:grid;
     grid-template-columns:1fr 1fr;
-    gap:15px;
-    padding:15px;
+    gap:10px;
+    padding:10px;
 }
 
 .btn{
     background:#1c2b3a;
     padding:15px;
-    border-radius:20px;
+    border-radius:15px;
     text-align:center;
+}
+
+/* PANEL */
+.overlay{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background:#000a;
+    display:none;
+    justify-content:center;
+    align-items:center;
+}
+
+.panel{
+    width:90%;
+    max-width:400px;
+    background:#0f2233;
+    padding:20px;
+    border-radius:20px;
+}
+
+input{
+    width:100%;
+}
+
+button{
+    width:100%;
+    padding:15px;
+    margin-top:10px;
+    border:none;
+    border-radius:10px;
+    background:#19a7ce;
+    color:white;
 }
 </style>
 </head>
 
 <body>
 
-<h1>GG SENSI 🔥</h1>
+<div class="header">GG SENSI 🔥</div>
 
-<!-- MENU -->
-<div class="menu">
-<button onclick="mostrarSeccion('top')">🔥 Top</button>
-<button onclick="mostrarSeccion('guardados')">💾 Guardados</button>
-<button onclick="verVIP()">👑 VIP</button>
+<div class="tabs">
+<div class="tab active" onclick="mostrar('top')">🔥 Top</div>
+<div class="tab" onclick="mostrar('guardados')">💾 Guardados</div>
+<div class="tab" onclick="vip()">👑 VIP</div>
 </div>
 
-<!-- CONTENIDO -->
-<div id="contenido" class="grid"></div>
+<!-- TOP -->
+<div id="top" class="grid">
+
+<div class="btn" onclick="abrir('lince')">🐯 Lince FF</div>
+<div class="btn" onclick="abrir('marechal')">👑 Marechal</div>
+
+<div class="btn" onclick="abrir('two9')">💀 Two9</div>
+<div class="btn" onclick="abrir('santana')">🔥 Santana</div>
+
+<div class="btn" onclick="abrir('boyka')">💀 Boyka</div>
+<div class="btn" onclick="abrir('ruso')">❄️ Ruso</div>
+
+</div>
+
+<div id="guardados" class="grid" style="display:none">
+<div class="btn">No tienes guardados</div>
+</div>
+
+<!-- PANEL -->
+<div class="overlay" id="panel" onclick="cerrar(event)">
+<div class="panel">
+
+<h3>Ajustes de sensibilidad</h3>
+
+<p>General <span id="g"></span></p>
+<input type="range" max="200" oninput="g.innerText=this.value">
+
+<p>Punto rojo <span id="p"></span></p>
+<input type="range" max="200" oninput="p.innerText=this.value">
+
+<p>Mira 2x <span id="m2"></span></p>
+<input type="range" max="200" oninput="m2.innerText=this.value">
+
+<p>Mira 4x <span id="m4"></span></p>
+<input type="range" max="200" oninput="m4.innerText=this.value">
+
+<p>Mira Franco <span id="mf"></span></p>
+<input type="range" max="200" oninput="mf.innerText=this.value">
+
+<p>Cámara Libre <span id="cl"></span></p>
+<input type="range" max="200" oninput="cl.innerText=this.value">
+
+<h4>Dispositivo</h4>
+<p>DPI: <span id="dpi"></span></p>
+<p>Tamaño Botón: <span id="boton"></span></p>
+
+<button>Guardar Configuración</button>
+
+</div>
+</div>
 
 <script>
 
-const PASSWORD = "44400978";
+// 🔥 SENSIBILIDADES TOP (las de tus imágenes)
+const sensis = {
 
-// CONFIGURACIONES
-const configs = {
-dragon:[173,147,128,185,45,0],
-demon:[160,140,120,170,50,10],
-ghost:[180,150,130,190,40,5],
-toxic:[165,135,125,175,60,15],
-lgang:[170,145,135,180,55,10],
-free:[175,155,140,185,50,5],
-suprema:[190,160,150,200,60,20],
-panel:[150,130,110,160,45,0],
-insana:[185,165,145,195,55,10],
-moto:[140,120,100,150,40,0],
-hz:[155,135,115,165,50,5],
-xiaomi:[145,125,105,155,45,0],
-p90:[200,180,160,200,70,20]
+lince:[145,124,179,162,101,100,300,55],
+marechal:[175,126,158,175,185,171,499,58],
+two9:[195,70,160,181,27,0,500,36],
+santana:[195,173,158,190,22,84,735,61],
+boyka:[200,96,42,68,54,58,450,44],
+ruso:[200,200,173,163,163,159,1500,100]
+
 };
 
-// MOSTRAR SECCION
-function mostrarSeccion(tipo){
-let cont = document.getElementById("contenido");
-cont.innerHTML = "";
+function abrir(tipo){
+let s=sensis[tipo];
+let sliders=document.querySelectorAll("input");
 
-let lista = [];
+g.innerText=s[0]; sliders[0].value=s[0];
+p.innerText=s[1]; sliders[1].value=s[1];
+m2.innerText=s[2]; sliders[2].value=s[2];
+m4.innerText=s[3]; sliders[3].value=s[3];
+mf.innerText=s[4]; sliders[4].value=s[4];
+cl.innerText=s[5]; sliders[5].value=s[5];
 
-if(tipo === "top"){
-lista = ["dragon","demon","ghost","toxic"];
+dpi.innerText=s[6];
+boton.innerText=s[7];
+
+panel.style.display="flex";
 }
 
-if(tipo === "guardados"){
-lista = JSON.parse(localStorage.getItem("guardados")) || [];
+function cerrar(e){
+if(e.target.id==="panel"){
+panel.style.display="none";
+}
 }
 
-lista.forEach(n => {
-cont.innerHTML += `
-<div class="btn" onclick="mostrar('${n}')">
-${n.toUpperCase()}
-</div>
-`;
-});
+// TABS
+function mostrar(id){
+top.style.display="none";
+guardados.style.display="none";
+
+document.getElementById(id).style.display="grid";
 }
 
-// VIP CON 3 INTENTOS
-function verVIP(){
+// 🔐 VIP CON 3 INTENTOS
+function vip(){
 
-let hoy = new Date().toLocaleDateString();
+let hoy = new Date().toDateString();
 
-let data = JSON.parse(localStorage.getItem("vipIntentos")) || {
-fecha: hoy,
-intentos: 0
-};
-
-if(data.fecha !== hoy){
-data.fecha = hoy;
-data.intentos = 0;
+if(localStorage.fecha !== hoy){
+localStorage.intentos = 3;
+localStorage.fecha = hoy;
 }
 
-if(data.intentos >= 3){
-alert("❌ Has agotado tus 3 intentos por hoy");
+if(localStorage.intentos <= 0){
+alert("❌ Sin intentos hoy");
 return;
 }
 
-let input = prompt("🔒 Contraseña VIP:");
+let pass = prompt("Contraseña VIP:");
 
-if(input === PASSWORD){
-
-data.intentos = 0;
-localStorage.setItem("vipIntentos", JSON.stringify(data));
-
-let cont = document.getElementById("contenido");
-cont.innerHTML = "";
-
-let lista = ["lgang","free","suprema","panel","insana","moto","hz","xiaomi","p90"];
-
-lista.forEach(n => {
-cont.innerHTML += `
-<div class="btn" onclick="mostrar('${n}')">
-${n.toUpperCase()}
-</div>
-`;
-});
-
+if(pass === "44400978"){
+alert("✅ Bienvenido VIP");
 }else{
-
-data.intentos++;
-localStorage.setItem("vipIntentos", JSON.stringify(data));
-
-let restantes = 3 - data.intentos;
-
-alert("❌ Contraseña incorrecta\nIntentos restantes: " + restantes);
-}
-
-}
-
-// MOSTRAR SENSI
-function mostrar(tipo){
-
-let c = configs[tipo];
-let codigo = c.join("-");
-
-let guardar = confirm(
-"🔥 SENSI 🔥\n\n" +
-"General: " + c[0] + "\n" +
-"Punto rojo: " + c[1] + "\n" +
-"Mira 2x: " + c[2] + "\n" +
-"Mira 4x: " + c[3] + "\n" +
-"Mira Franco: " + c[4] + "\n" +
-"Cámara Libre: " + c[5] + "\n\n" +
-"📋 Código: " + codigo + "\n\n" +
-"¿Guardar en favoritos?"
-);
-
-if(guardar){
-let guardados = JSON.parse(localStorage.getItem("guardados")) || [];
-
-if(!guardados.includes(tipo)){
-guardados.push(tipo);
-localStorage.setItem("guardados", JSON.stringify(guardados));
-alert("✅ Guardado");
+localStorage.intentos--;
+alert("❌ Incorrecta | Intentos: " + localStorage.intentos);
 }
 }
-
-}
-
-// INICIO
-mostrarSeccion('top');
 
 </script>
 

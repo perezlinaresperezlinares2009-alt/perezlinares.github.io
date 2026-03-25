@@ -2,154 +2,161 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<title>Sensi Elite</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SENSI ELITE 🔥</title>
 
 <style>
-body {
-  margin: 0;
-  background: #0b1320;
-  font-family: Arial;
-  color: white;
-  text-align: center;
+body{
+    margin:0;
+    font-family:Arial;
+    background:#0b1622;
+    color:white;
 }
 
-h1 {
-  margin-top: 20px;
+h1{
+    text-align:center;
+    margin:20px;
 }
 
-.botones {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 15px;
-  padding: 20px;
+.grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:15px;
+    padding:20px;
 }
 
-button {
-  padding: 18px;
-  border-radius: 15px;
-  border: none;
-  background: #1c2a44;
-  color: white;
-  font-size: 14px;
+.btn{
+    background:#1c2a3a;
+    padding:15px;
+    border-radius:15px;
+    text-align:center;
+    cursor:pointer;
 }
 
-/* PANEL ABAJO */
-.resultado {
-  margin: 20px;
-  padding: 20px;
-  background: #16223a;
-  border-radius: 15px;
-  transition: 0.3s;
+/* MODAL */
+.modal{
+    display:none;
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background:rgba(0,0,0,0.7);
+}
+
+.modal-content{
+    background:#101c2c;
+    margin:50px auto;
+    padding:20px;
+    border-radius:15px;
+    width:90%;
+    max-width:400px;
+}
+
+.slider{
+    margin:10px 0;
 }
 </style>
-</head>
 
+</head>
 <body>
 
 <h1>SENSI ELITE 🔥</h1>
 
-<div class="botones">
-  <button onclick="mostrar('dragon')">🐉 Dragon Headshot</button>
-  <button onclick="mostrar('demon')">😈 Demon Aimlock</button>
-  <button onclick="mostrar('ghost')">👻 Ghost Precision</button>
-  <button onclick="mostrar('toxic')">☠️ Toxic Destroyer</button>
+<div class="grid">
 
-  <button onclick="mostrar('freestyle')">🔥 Sensi Freestyle</button>
-  <button onclick="mostrar('suprema')">⚡ Sensi Suprema</button>
-  <button onclick="mostrar('lgang')">💀 Sensibilidad L-Gang</button>
-  <button onclick="mostrar('panel')">🎯 Sensi Panel</button>
+<div class="btn" onclick="openSensi('dragon')">🐉 Dragon Headshot</div>
+<div class="btn" onclick="openSensi('demon')">😈 Demon Aimlock</div>
+<div class="btn" onclick="openSensi('ghost')">👻 Ghost Precision</div>
+<div class="btn" onclick="openSensi('toxic')">☠️ Toxic Destroyer</div>
+
+<div class="btn" onclick="openSensi('lgang')">🔥 L-Gang Pro</div>
+<div class="btn" onclick="openSensi('freestyle')">🎯 Freestyle God</div>
+<div class="btn" onclick="openSensi('suprema')">⚡ Suprema Ultra</div>
+<div class="btn" onclick="openSensi('panel')">🧠 Panel Hacker</div>
+
+<div class="btn" onclick="openSensi('insana')">👹 Insana Max</div>
+<div class="btn" onclick="openSensi('motorola')">📱 Motorola Pro</div>
+<div class="btn" onclick="openSensi('hz')">⚙️ HZ Pro</div>
+<div class="btn" onclick="openSensi('xiaomi')">📲 Xiaomi Killer</div>
+
+<div class="btn" onclick="openSensi('p90')">🔫 P90 Destroyer</div>
+
 </div>
 
-<!-- RESULTADO ABAJO -->
-<div id="resultado" class="resultado">
-  <h2>🔥 Panel</h2>
-  <p>Config aquí...</p>
+<!-- MODAL -->
+<div class="modal" id="modal" onclick="closeModal(event)">
+<div class="modal-content" id="content"></div>
 </div>
 
 <script>
-const resultado = document.getElementById("resultado");
 
-function mostrar(tipo) {
+function openSensi(tipo){
 
-  if (tipo === "dragon") {
-    resultado.innerHTML = `
-      <h2>🐉 Dragon Headshot</h2>
-      General: 100<br>
-      Punto Rojo: 100<br>
-      Mira 2x: 95<br>
-      AWM: 80
-    `;
-  }
+let data = {
 
-  if (tipo === "demon") {
-    resultado.innerHTML = `
-      <h2>😈 Demon Aimlock</h2>
-      General: 99<br>
-      Punto Rojo: 95<br>
-      Mira 2x: 90<br>
-      AWM: 75
-    `;
-  }
+dragon:[173,147,128,185,45,0,525,37],
+demon:[200,120,160,160,46,0,0,90],
+ghost:[70,88,90,100,50,100,410,1],
+toxic:[139,0,190,15,1,100,560,56],
 
-  if (tipo === "ghost") {
-    resultado.innerHTML = `
-      <h2>👻 Ghost Precision</h2>
-      General: 97<br>
-      Punto Rojo: 93<br>
-      Mira 2x: 88<br>
-      AWM: 70
-    `;
-  }
+lgang:[180,150,130,170,50,0,500,40],
+freestyle:[190,140,150,180,60,0,480,45],
+suprema:[200,160,170,190,70,0,600,50],
+panel:[160,130,120,150,40,0,450,35],
 
-  if (tipo === "toxic") {
-    resultado.innerHTML = `
-      <h2>☠️ Toxic Destroyer</h2>
-      General: 100<br>
-      Punto Rojo: 98<br>
-      Mira 2x: 92<br>
-      AWM: 78
-    `;
-  }
+insana:[200,120,160,160,46,0,0,90],
+motorola:[70,88,90,100,50,100,410,1],
+hz:[139,0,190,15,1,100,560,56],
+xiaomi:[171,164,186,158,175,52,555,45],
+p90:[178,152,174,174,100,160,350,40]
 
-  if (tipo === "freestyle") {
-    resultado.innerHTML = `
-      <h2>🔥 Freestyle Insano</h2>
-      General: 100<br>
-      Punto Rojo: 95<br>
-      Mira 2x: 90<br>
-      AWM: 70
-    `;
-  }
+};
 
-  if (tipo === "suprema") {
-    resultado.innerHTML = `
-      <h2>⚡ Suprema Demoníaca</h2>
-      General: 98<br>
-      Punto Rojo: 92<br>
-      Mira 2x: 85<br>
-      AWM: 65
-    `;
-  }
+let s = data[tipo];
 
-  if (tipo === "lgang") {
-    resultado.innerHTML = `
-      <h2>💀 L-Gang Pro Max</h2>
-      General: 100<br>
-      Punto Rojo: 100<br>
-      Mira 2x: 95<br>
-      AWM: 75
-    `;
-  }
+document.getElementById("content").innerHTML = `
+<h2>Ajustes de sensibilidad</h2>
 
-  if (tipo === "panel") {
-    resultado.innerHTML = `
-      <h2>🎯 Panel Destructor</h2>
-      HUD: 70%<br>
-      Botón disparo: 60%<br>
-      DPI recomendado: 600
-    `;
-  }
+<div>General: ${s[0]}</div>
+<input type="range" value="${s[0]}" class="slider">
+
+<div>Punto rojo: ${s[1]}</div>
+<input type="range" value="${s[1]}" class="slider">
+
+<div>Mira 2x: ${s[2]}</div>
+<input type="range" value="${s[2]}" class="slider">
+
+<div>Mira 4x: ${s[3]}</div>
+<input type="range" value="${s[3]}" class="slider">
+
+<div>Mira Franco: ${s[4]}</div>
+<input type="range" value="${s[4]}" class="slider">
+
+<div>Cámara Libre: ${s[5]}</div>
+<input type="range" value="${s[5]}" class="slider">
+
+<br>
+
+<div>DPI: ${s[6]}</div>
+<div>Tamaño botón: ${s[7]}</div>
+
+<br>
+
+<button style="width:100%;padding:10px;border-radius:10px;background:#00c2ff;border:none;color:white;">
+Guardar Configuración
+</button>
+`;
+
+document.getElementById("modal").style.display="block";
 }
+
+function closeModal(e){
+if(e.target.id==="modal"){
+document.getElementById("modal").style.display="none";
+}
+}
+
 </script>
 
 </body>

@@ -1,104 +1,25 @@
-<!DOCTYPE html><html lang="es">
+<!DOCTYPE html>
+<html lang="es">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Sensi Elite PRO</title>
+
 <style>
 body {
   margin: 0;
-  font-family: 'Segoe UI', sans-serif;
-  background: linear-gradient(180deg,#0b1220,#020617);
+  font-family: Arial;
+  background: linear-gradient(180deg,#0b1220,#0d1b2a);
   color: white;
-}.header { padding: 20px; font-size: 24px; font-weight: bold; }
-
-.search { margin: 0 20px; padding: 12px; border-radius: 25px; background: #1e293b; opacity: 0.8; }
-
-.tabs { display: flex; gap: 10px; padding: 15px; overflow-x: auto; }
-
-.tab { padding: 10px 18px; border-radius: 25px; background: #1e293b; cursor: pointer; white-space: nowrap; transition: 0.3s; }
-
-.tab:hover { transform: scale(1.05); }
-
-.active { background: linear-gradient(90deg,#06b6d4,#22c55e); }
-
-.section { padding: 10px 20px; font-weight: bold; color: #38bdf8; }
-
-.card { background: #1e293b; margin: 12px 20px; padding: 15px; border-radius: 18px; display: flex; justify-content: space-between; align-items: center; transition: 0.3s; }
-
-.card:hover { transform: scale(1.02); background: #273449; }
-
-.like { display: flex; gap: 10px; font-size: 14px; }
-
-.btn-add { position: fixed; bottom: 20px; right: 20px; background: linear-gradient(135deg,#06b6d4,#22c55e); width: 65px; height: 65px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 32px; box-shadow: 0 0 20px rgba(0,0,0,0.6); cursor: pointer; }
-
-.modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); display: none; justify-content: center; align-items: center; }
-
-.modal-content { background: #1e293b; padding: 20px; border-radius: 15px; width: 90%; }
-
-input { width: 100%; padding: 10px; margin: 10px 0; border-radius: 10px; border: none; }
-
-button { width: 100%; padding: 10px; border-radius: 10px; border: none; background: #22c55e; color: white; font-weight: bold; } </style>
-
-</head>
-<body><div class="header">SENSI ELITE PRO</div>
-<div class="search">🔍 Buscar dispositivo...</div><div class="tabs">
-  <div class="tab">🔥 Tendencia</div>
-  <div class="tab active">🕒 Recientes</div>
-  <div class="tab">💾 Guardados</div>
-</div><div class="section">Tipo de Dispositivo</div><div class="tabs">
-  <div class="tab active">📱 Móvil</div>
-  <div class="tab">💻 Emulador</div>
-  <div class="tab">👑 VIP</div>
-</div><div id="lista"></div><div class="btn-add" onclick="abrirModal()">+</div><div class="modal" id="modal">
-  <div class="modal-content">
-    <h3>Crear Sensibilidad</h3>
-    <input id="nombre" placeholder="Nombre del dispositivo">
-    <input id="likes" type="number" placeholder="Likes">
-    <button onclick="guardar()">Guardar</button>
-  </div>
-</div><script>
-let datos = JSON.parse(localStorage.getItem("sensis")) || [
-  {nombre:"poco c75s", likes:5, dislikes:1},
-  {nombre:"freestyle poco", likes:5, dislikes:0},
-];
-
-function render(){
-  let html="";
-  datos.forEach((d,i)=>{
-    html += `
-    <div class="card">
-      <div>${d.nombre}</div>
-      <div class="like">
-        <span onclick="like(${i})">👍 ${d.likes}</span>
-        <span onclick="dislike(${i})">👎 ${d.dislikes}</span>
-      </div>
-    </div>`;
-  });
-  document.getElementById("lista").innerHTML = html;
 }
 
-function like(i){ datos[i].likes++; guardarLS(); }
-function dislike(i){ datos[i].dislikes++; guardarLS(); }
-
-function abrirModal(){
-  document.getElementById("modal").style.display="flex";
+.header {
+  padding: 20px;
+  font-size: 24px;
+  font-weight: bold;
 }
 
-function guardar(){
-  let nombre = document.getElementById("nombre").value;
-  let likes = parseInt(document.getElementById("likes").value) || 0;
-  if(nombre){
-    datos.push({nombre, likes, dislikes:0});
-    guardarLS();
-    document.getElementById("modal").style.display="none";
-  }
-}
-
-function guardarLS(){
-  localStorage.setItem("sensis", JSON.stringify(datos));
-  render();
-}
-
-render();
-</script></body>
-</html>
+.search {
+  margin: 15px;
+  padding: 12px;
+  border-radius: 20

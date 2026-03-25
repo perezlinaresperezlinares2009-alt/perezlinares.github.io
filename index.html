@@ -21,6 +21,14 @@ h1{
     margin-bottom:15px;
 }
 
+input{
+    width:100%;
+    padding:12px;
+    border-radius:10px;
+    border:none;
+    margin-bottom:20px;
+}
+
 /* BOTONES */
 .botones{
     display:grid;
@@ -75,6 +83,8 @@ button{
 <div class="container">
     <h1>SENSI ELITE 🔥</h1>
 
+    <input type="text" placeholder="Buscar...">
+
     <div class="botones">
         <button onclick="abrir('free')">Sensi Freestyle</button>
         <button onclick="abrir('suprema')">Sensi Suprema</button>
@@ -86,7 +96,7 @@ button{
 <!-- FONDO -->
 <div id="fondo" onclick="cerrar()"></div>
 
-<!-- SENSIS -->
+<!-- SENSIS (TODAS OCULTAS HASTA DAR CLICK) -->
 
 <div id="free" class="sensi">
     <h3>🔥 Freestyle</h3>
@@ -114,7 +124,6 @@ button{
     <p>Free Camera: 170</p>
 </div>
 
-<!-- 🔥 PANEL (AQUÍ ESTABA EL ERROR) -->
 <div id="panel" class="sensi">
     <h3>🔥 Panel</h3>
     <p>General: 181</p>
@@ -127,16 +136,22 @@ button{
 
 <script>
 function abrir(id){
-    let todos = document.querySelectorAll('.sensi');
-    todos.forEach(e => e.style.display = 'none');
+    // ocultar todos
+    document.querySelectorAll('.sensi').forEach(e=>{
+        e.style.display = 'none';
+    });
 
+    // mostrar el seleccionado
     document.getElementById(id).style.display = 'block';
+
+    // mostrar fondo
     document.getElementById('fondo').style.display = 'block';
 }
 
 function cerrar(){
-    let todos = document.querySelectorAll('.sensi');
-    todos.forEach(e => e.style.display = 'none');
+    document.querySelectorAll('.sensi').forEach(e=>{
+        e.style.display = 'none';
+    });
 
     document.getElementById('fondo').style.display = 'none';
 }

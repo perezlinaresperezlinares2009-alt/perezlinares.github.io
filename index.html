@@ -19,7 +19,6 @@ body{
     font-weight:bold;
 }
 
-/* TABS ARRIBA */
 .tabs{
     display:flex;
     justify-content:center;
@@ -34,7 +33,6 @@ body{
     cursor:pointer;
 }
 
-/* GRID BOTONES */
 .grid{
     display:grid;
     grid-template-columns:1fr 1fr;
@@ -47,24 +45,17 @@ body{
     padding:15px;
     border-radius:15px;
     text-align:center;
-    font-size:16px;
+    cursor:pointer;
 }
 
-/* SECCIONES */
-.section{
-    display:none;
+.section{ display:none; padding:15px; }
+.active{ display:block; }
+
+.panel{
+    background:#102636;
     padding:15px;
-}
-
-.active{
-    display:block;
-}
-
-/* INPUT VIP */
-input{
-    width:100%;
-    padding:10px;
-    margin-top:10px;
+    border-radius:15px;
+    margin-top:15px;
 }
 
 .btn{
@@ -76,13 +67,12 @@ input{
     background:linear-gradient(90deg,#00ffcc,#00ccff);
 }
 </style>
-
 </head>
+
 <body>
 
 <div class="header">SENSI ELITE 🔥</div>
 
-<!-- TABS -->
 <div class="tabs">
     <div class="tab" onclick="mostrar('tops')">🔥 Tops</div>
     <div class="tab" onclick="mostrar('guardados')">💾 Guardados</div>
@@ -92,18 +82,18 @@ input{
 <!-- TOPS -->
 <div id="tops" class="section active">
     <div class="grid">
-        <div class="card">🐉 Dragon Headshot</div>
-        <div class="card">😈 Demon Aimlock</div>
-        <div class="card">👻 Ghost Precision</div>
-        <div class="card">☠️ Toxic Destroyer</div>
-        <div class="card">🔥 L-Gang Pro</div>
-        <div class="card">🎯 Freestyle God</div>
-        <div class="card">⚡ Suprema Ultra</div>
-        <div class="card">🧠 Panel Hacker</div>
-        <div class="card">👹 Insana Max</div>
-        <div class="card">📱 Motorola Pro</div>
-        <div class="card">⚙️ HZ Pro</div>
-        <div class="card">📲 Xiaomi Killer</div>
+        <div class="card" onclick="cargarSensi('dragon')">🐉 Dragon Headshot</div>
+        <div class="card" onclick="cargarSensi('demon')">😈 Demon Aimlock</div>
+        <div class="card" onclick="cargarSensi('ghost')">👻 Ghost Precision</div>
+        <div class="card" onclick="cargarSensi('toxic')">☠️ Toxic Destroyer</div>
+    </div>
+
+    <!-- PANEL DONDE SALE LA SENSI -->
+    <div class="panel" id="panelSensi">
+        <h3>Sensibilidad</h3>
+        <p id="datos">Selecciona una sensi...</p>
+
+        <button class="btn" onclick="guardar()">Guardar</button>
     </div>
 </div>
 
@@ -115,15 +105,12 @@ input{
 
 <!-- VIP -->
 <div id="vip" class="section">
-    <h3>Zona VIP 🔒</h3>
-
     <input type="password" id="pass" placeholder="Contraseña">
     <button class="btn" onclick="entrarVIP()">Entrar</button>
 
     <div id="vipContenido" style="display:none;">
-        <h4>Sensis PRO 🔥</h4>
-        <p>Dragon Pro: 100 - 100 - 95 - 90</p>
-        <p>Demon Pro: 100 - 98 - 93 - 88</p>
+        <h3>Sensis VIP 🔥</h3>
+        <p onclick="cargarSensi('vip1')">🔥 VIP PRO MAX</p>
     </div>
 </div>
 
@@ -135,22 +122,60 @@ function mostrar(id){
     document.getElementById(id).classList.add("active");
 }
 
-// VIP CON CONTRASEÑA
+// BASE DE SENSIS
+let sensis = {
+    dragon: "General: 100 | Punto rojo: 95 | Mira 2x: 90 | Mira 4x: 85",
+    demon: "General: 100 | Punto rojo: 98 | Mira 2x: 92 | Mira 4x: 88",
+    ghost: "General: 95 | Punto rojo: 90 | Mira 2x: 85 | Mira 4x: 80",
+    toxic: "General: 100 | Punto rojo: 100 | Mira 2x: 95 | Mira 4x: 90",
+    vip1: "General: 100 | Punto rojo: 100 | Mira 2x: 100 | Mira 4x: 100 🔥"
+};
+
+let actual = "";
+
+// MOSTRAR SENSI AL HACER CLICK
+function cargarSensi(nombre){
+    actual = nombre;
+    document.getElementById("datos").innerText = sensis[nombre];
+}
+
+// GUARDAR
+function guardar(){
+    if(actual === "") return;
+
+    let lista = JSON.parse(localStorage.getItem("guardados") || "[]");
+    lista.push(sensis[actual]);
+    localStorage.setItem("guardados", JSON.stringify(lista));
+
+    alert("Guardado 🔥");
+    mostrarGuardados();
+}
+
+// MOSTRAR GUARDADOS
+function mostrarGuardados(){
+    let lista = JSON.parse(localStorage.getItem("guardados") || "[]");
+    let cont = document.getElementById("lista");
+    cont.innerHTML = "";
+
+    lista.forEach(item=>{
+        let p = document.createElement("p");
+        p.innerText = item;
+        cont.appendChild(p);
+    });
+}
+
+mostrarGuardados();
+
+// VIP
 function entrarVIP(){
     let pass = document.getElementById("pass").value;
 
     if(pass === "44400978"){
         document.getElementById("vipContenido").style.display="block";
-        localStorage.setItem("vip","true");
-        alert("Acceso VIP 🔥");
+        alert("VIP ACTIVADO 🔥");
     } else {
-        alert("Contraseña incorrecta ❌");
+        alert("Incorrecto ❌");
     }
-}
-
-// MANTENER VIP
-if(localStorage.getItem("vip") === "true"){
-    document.getElementById("vipContenido").style.display="block";
 }
 
 </script>

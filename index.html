@@ -1,120 +1,112 @@
--- ROBLOX IA: INTERFAZ PRO + KNOWLEDGE SYSTEM
+-- ==========================================
+-- ROBLOX IA MASTER: KNOWLEDGE & INTERFACE
+-- ==========================================
 local Players = game:GetService("Players")
 local player = Players.LocalPlayer or Players.PlayerAdded:Wait()
 
--- 1. DISEÑO DE LA INTERFAZ (IDÉNTICO A TU WEB)
+-- 1. INTERFAZ PROFESIONAL (ESTILO TU WEB)
 local sg = Instance.new("ScreenGui", player:WaitForChild("PlayerGui"))
-sg.Name = "InyectorIA_Oficial"
+sg.Name = "InyectorIA_Master"
 sg.ResetOnSpawn = false
 
 local main = Instance.new("Frame", sg)
 main.Size = UDim2.new(0, 320, 0, 420)
 main.Position = UDim2.new(0.05, 0, 0.2, 0)
-main.BackgroundColor3 = Color3.fromRGB(15, 18, 26) -- Fondo oscuro exacto
+main.BackgroundColor3 = Color3.fromRGB(15, 18, 26)
 main.BorderSizePixel = 0
 main.Active = true
 main.Draggable = true
-Instance.new("UICorner", main).CornerRadius = UDim.new(0, 20) -- Bordes redondeados
+Instance.new("UICorner", main).CornerRadius = UDim.new(0, 20)
 
--- TÍTULO "INYECTOR DE SCRIPTS IA"
+-- Título y Créditos
 local title = Instance.new("TextLabel", main)
-title.Size = UDim2.new(0.65, 0, 0, 60)
+title.Size = UDim2.new(0.6, 0, 0, 60)
 title.Position = UDim2.new(0.07, 0, 0.05, 0)
 title.Text = "INYECTOR DE SCRIPTS IA"
 title.TextColor3 = Color3.new(1, 1, 1)
 title.Font = Enum.Font.GothamBold
 title.TextSize = 18
-title.TextXAlignment = Enum.TextXAlignment.Left
 title.BackgroundTransparency = 1
 
--- INDICADOR DE CRÉDITOS ⚡
 local creds = Instance.new("TextLabel", main)
 creds.Size = UDim2.new(0, 90, 0, 35)
 creds.Position = UDim2.new(0.68, 0, 0.08, 0)
 creds.BackgroundColor3 = Color3.fromRGB(28, 38, 65)
 creds.Text = "⚡ CRÉDITOS: 0"
 creds.TextColor3 = Color3.new(1, 1, 1)
-creds.Font = Enum.Font.GothamBold
-creds.TextSize = 10
 Instance.new("UICorner", creds).CornerRadius = UDim.new(0, 8)
 
--- CUADRO DE TEXTO (INPUT)
+-- Cuadro de Entrada (Cerebro IA)
 local input = Instance.new("TextBox", main)
 input.Size = UDim2.new(0.86, 0, 0, 140)
 input.Position = UDim2.new(0.07, 0, 0.22, 0)
-input.PlaceholderText = "Ej: Crea un simulador de entrenamiento con pets..."
-input.PlaceholderColor3 = Color3.fromRGB(80, 85, 100)
+input.PlaceholderText = "Ej: Crea un simulador con monedas y tienda..."
 input.BackgroundColor3 = Color3.fromRGB(10, 12, 18)
 input.TextColor3 = Color3.new(1, 1, 1)
 input.TextWrapped = true
-input.Text = ""
-input.Font = Enum.Font.Gotham
 Instance.new("UICorner", input).CornerRadius = UDim.new(0, 15)
 
--- BOTÓN COMPARTIR
+-- Botón Compartir
 local share = Instance.new("TextButton", main)
 share.Size = UDim2.new(0.86, 0, 0, 50)
 share.Position = UDim2.new(0.07, 0, 0.6, 0)
 share.BackgroundColor3 = Color3.fromRGB(24, 30, 45)
 share.Text = "🔗 Compartir (+1 Cr.)"
 share.TextColor3 = Color3.new(1, 1, 1)
-share.Font = Enum.Font.GothamBold
 Instance.new("UICorner", share).CornerRadius = UDim.new(0, 12)
 
--- BOTÓN GENERAR (AZUL)
+-- Botón Generar (Azul Pro)
 local gen = Instance.new("TextButton", main)
 gen.Size = UDim2.new(0.86, 0, 0, 60)
 gen.Position = UDim2.new(0.07, 0, 0.8, 0)
-gen.BackgroundColor3 = Color3.fromRGB(37, 99, 235) -- Azul exacto
-gen.Text = "GENERAR (1 CR.)"
+gen.BackgroundColor3 = Color3.fromRGB(37, 99, 235)
+gen.Text = "GENERAR KIT PROFESIONAL"
 gen.TextColor3 = Color3.new(1, 1, 1)
 gen.Font = Enum.Font.GothamBold
-gen.TextSize = 16
 Instance.new("UICorner", gen).CornerRadius = UDim.new(0, 15)
 
--- 2. "CEREBRO" DE CONOCIMIENTO TOTAL
-local function generarKitProfesional(pedido)
+-- 2. "CEREBRO" (SABE TODO DE ROBLOX)
+local function IA_Knowledge(pedido)
     pedido = pedido:lower()
     local root = player.Character.HumanoidRootPart.Position
     
-    -- CONOCIMIENTO: SIMULADOR (Dinero + Leaderstats + Tienda)
-    if pedido:find("simulador") or pedido:find("dinero") then
+    if pedido:find("simulador") or pedido:find("monedas") then
+        -- Inyecta sistema de economía profesional
         local s = Instance.new("Script", game:GetService("ServerScriptService"))
         s.Source = "game.Players.PlayerAdded:Connect(function(p) local f = Instance.new('Folder', p) f.Name = 'leaderstats' local m = Instance.new('IntValue', f) m.Name = 'Monedas' m.Value = 1000 end)"
-        
-        local shop = Instance.new("Part", workspace)
-        shop.Size = Vector3.new(15, 15, 15)
-        shop.Position = root + Vector3.new(0, 5, 20)
-        shop.BrickColor = BrickColor.new("Bright yellow")
-        shop.Anchored = true
-        print("IA: Generando sistema de economía profesional.")
+        print("IA: Sistema de Leaderstats inyectado.")
 
-    -- CONOCIMIENTO: OBBY (Plataformas + Neon)
     elseif pedido:find("obby") or pedido:find("parkour") then
-        for i = 1, 15 do
+        -- Inyecta niveles profesionales
+        for i = 1, 12 do
             local p = Instance.new("Part", workspace)
             p.Size = Vector3.new(8, 1, 8)
-            p.Position = root + Vector3.new(0, i * 3, i * 15)
+            p.Position = root + Vector3.new(0, i * 3, i * 12)
             p.Anchored = true
             p.BrickColor = BrickColor.Random()
             p.Material = Enum.Material.Neon
         end
-        print("IA: Generando 15 niveles de Obby profesional.")
+        print("IA: Kit de Obby Parkour inyectado.")
     end
 end
 
--- EVENTOS
+-- 3. MODO ADMIN Y EVENTOS
 gen.MouseButton1Click:Connect(function()
     if input.Text ~= "" then
-        gen.Text = "ANALIZANDO ROBLOX..."
-        task.wait(2)
-        generarKitProfesional(input.Text)
+        gen.Text = "INYECTANDO CONOCIMIENTO..."
+        task.wait(1.5)
+        IA_Knowledge(input.Text)
         gen.Text = "KIT INYECTADO ✅"
-        task.wait(1)
-        gen.Text = "GENERAR (1 CR.)"
+        task.wait(2)
+        gen.Text = "GENERAR KIT PROFESIONAL"
     end
 end)
 
 share.MouseButton1Click:Connect(function()
     game:GetService("SocialService"):PromptGameInvite(player)
+    -- Modo Admin Activado al compartir
+    player.Character.Humanoid.WalkSpeed = 100
+    player.Character.Humanoid.JumpPower = 200
 end)
+
+print("¡IA MASTER CARGADA DESDE CELULAR!")

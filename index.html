@@ -3,116 +3,104 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Roblox AI - Owner Edition</title>
+    <title>Roblox AI - Injector</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;700;900&display=swap');
-        body { font-family: 'Inter', sans-serif; background-color: #05070a; color: #e5e7eb; }
-        .roblox-font { font-family: 'Bebas Neue', cursive; letter-spacing: 2px; }
-        .glass { background: rgba(17, 24, 39, 0.85); backdrop-filter: blur(15px); border: 1px solid rgba(255,255,255,0.1); }
-        .owner-glow { box-shadow: 0 0 20px rgba(234, 179, 8, 0.3); border: 1px solid rgba(234, 179, 8, 0.5) !important; }
+        body { font-family: 'Inter', sans-serif; background-color: #05070a; color: #e5e7eb; overflow-x: hidden; }
+        .glass { background: rgba(17, 24, 39, 0.8); backdrop-filter: blur(15px); border: 1px solid rgba(255,255,255,0.08); }
+        .rebirth-orange { color: #ff4d00; }
+        .hidden { display: none; }
+        .owner-glow { box-shadow: 0 0 25px rgba(234, 179, 8, 0.4); border-color: rgba(234, 179, 8, 0.6) !important; }
     </style>
 </head>
-<body>
+<body class="min-h-screen flex flex-col items-center p-4">
 
-    <nav class="p-4 border-b border-white/5 glass sticky top-0 z-50">
-        <div class="max-w-5xl mx-auto flex justify-between items-center">
-            <div class="flex items-center gap-3">
-                <div class="bg-blue-600 p-2 rounded-xl shadow-lg shadow-blue-600/30"><i class="fa-solid fa-crown text-white"></i></div>
-                <h1 class="roblox-font text-2xl text-white uppercase">Roblox <span id="brandName" class="text-blue-500">Auto-Dev</span></h1>
-            </div>
-            <div id="creditBox" class="bg-[#111827] border border-yellow-500/30 px-5 py-2 rounded-full flex items-center gap-2">
-                <i class="fa-solid fa-bolt text-yellow-500"></i>
-                <span id="creditDisplay" class="font-black text-yellow-500 text-lg">0</span>
-            </div>
+    <nav class="w-full max-w-5xl p-4 flex justify-between items-center mb-10">
+        <div class="flex items-center gap-2">
+            <i class="fa-solid fa-cube text-blue-500 text-2xl"></i>
+            <h1 id="brand" class="font-black uppercase tracking-tighter text-xl">ROBLOX <span class="text-blue-500">AUTO-DEV</span></h1>
+        </div>
+        <div class="bg-gray-900 px-4 py-2 rounded-full border border-white/10 flex items-center gap-2">
+            <i class="fa-solid fa-bolt text-yellow-500"></i>
+            <span id="creditCount" class="font-bold">0</span>
         </div>
     </nav>
 
-    <main class="max-w-3xl mx-auto p-6 space-y-8">
-        <div id="mainCard" class="glass p-8 rounded-[2.5rem] shadow-2xl space-y-6">
-            <h2 class="text-xl font-black text-center text-blue-400 uppercase tracking-widest">Inyector de Scripts IA</h2>
+    <div id="step-1" class="w-full max-w-2xl space-y-6 animate-in fade-in duration-500">
+        <div id="card-1" class="glass p-10 rounded-[3rem] shadow-2xl space-y-6">
+            <h2 class="text-2xl font-black italic uppercase tracking-tighter">Inyector de Scripts IA</h2>
+            <textarea id="userIdea" oninput="checkAdmin()" class="w-full bg-black/40 border border-white/5 rounded-3xl p-6 h-48 outline-none focus:ring-2 focus:ring-blue-500 text-lg transition-all" placeholder="Ej: Haz un mapa de Blox Fruits con barcos funcionales..."></textarea>
             
-            <textarea id="prompt" oninput="checkOwnerKey()" class="w-full bg-[#0a0f1a] border border-white/10 rounded-3xl p-6 text-lg outline-none h-44 focus:ring-2 focus:ring-blue-500 transition-all"
-                placeholder="Ej: Crea un juego de parkour con panel de admin..."></textarea>
-            
-            <div class="flex flex-col gap-4">
-                <button id="shareBtn" onclick="compartirParaUno()" class="w-full bg-green-600 hover:bg-green-500 text-white py-4 rounded-2xl font-black uppercase text-xs tracking-widest transition-all flex items-center justify-center gap-2">
-                    <i class="fa-solid fa-share-nodes"></i> Compartir para ganar 1 Crédito
-                </button>
-
-                <button id="genBtn" onclick="inyectar()" class="w-full bg-blue-600 hover:bg-blue-500 text-white py-5 rounded-2xl font-black uppercase text-xs tracking-widest shadow-xl shadow-blue-900/40 transition-all">
-                    Generar Proyecto (1 Cr.)
-                </button>
-            </div>
+            <button onclick="irALogin()" class="w-full bg-blue-600 hover:bg-blue-500 text-white py-5 rounded-2xl font-black uppercase tracking-widest flex items-center justify-center gap-3 transition-all">
+                Siguiente Paso <i class="fa-solid fa-arrow-right"></i>
+            </button>
         </div>
+    </div>
 
-        <div id="injectionPanel" class="hidden animate-in fade-in slide-in-from-bottom-5 space-y-4">
-            <div class="bg-gradient-to-br from-blue-600 to-indigo-700 p-8 rounded-[2.5rem] text-center shadow-2xl">
-                <p class="text-white/70 text-[10px] font-black uppercase mb-2">Token de Permiso Studio</p>
-                <h3 id="tokenID" class="text-white text-5xl font-black font-mono tracking-tighter italic">-----</h3>
-                <p class="text-blue-100 text-[10px] mt-4 opacity-70">Usa este token en tu Plugin para importar el juego.</p>
+    <div id="step-2" class="hidden w-full max-w-md space-y-8 animate-in zoom-in duration-300 py-10">
+        <div class="text-center space-y-4">
+            <div class="flex justify-center">
+                <div class="bg-[#ff4d00] p-4 rounded-2xl rotate-12 shadow-lg"><i class="fa-solid fa-bolt-lightning text-white text-3xl"></i></div>
             </div>
+            <h1 class="text-5xl font-black tracking-tighter">rebirth</h1>
+            <p class="text-gray-400 font-bold">Inicia sesión para continuar con tu idea</p>
         </div>
-    </main>
+        <div class="glass p-8 rounded-[2.5rem] space-y-4">
+            <button onclick="irAConfirmar()" class="w-full bg-white text-black py-4 rounded-xl font-bold flex items-center justify-center gap-3"><img src="https://www.google.com/favicon.ico" class="w-5 h-5"> Google</button>
+            <button onclick="irAConfirmar()" class="w-full bg-[#24292e] text-white py-4 rounded-xl font-bold flex items-center justify-center gap-3"><i class="fa-solid fa-envelope"></i> Email</button>
+        </div>
+    </div>
+
+    <div id="step-3" class="hidden w-full max-w-md space-y-6 animate-in fade-in duration-500 py-10">
+        <div class="text-center space-y-2">
+            <p class="text-[10px] font-bold text-gray-500 uppercase tracking-widest">Tu idea actual:</p>
+            <p id="ideaFinal" class="text-lg font-black italic text-blue-400">"..."</p>
+        </div>
+        <div class="glass p-8 rounded-[3rem] border-t-4 border-blue-500 text-center space-y-6">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/3/3a/Roblox_player_icon_black.svg" class="w-12 h-12 mx-auto invert opacity-50">
+            <h4 class="text-xl font-black uppercase">Permisos de Roblox</h4>
+            <p class="text-xs text-gray-400">Para inyectar scripts en tu juego, necesitamos acceso a tu Studio.</p>
+            <button onclick="finalizar()" class="w-full bg-[#00a2ff] text-white py-4 rounded-xl font-black uppercase tracking-widest text-[10px]">Permitir y Acceder</button>
+        </div>
+    </div>
+
+    <div id="step-final" class="hidden text-center space-y-6 py-20">
+        <i class="fa-solid fa-circle-check text-green-500 text-8xl animate-bounce"></i>
+        <h2 class="text-3xl font-black italic">PROCESANDO...</h2>
+        <p class="text-gray-500 text-sm">Vuelve a tu Roblox Studio ahora.</p>
+    </div>
 
     <script>
-        // CONFIGURACIÓN DE DUEÑO
-        const LLAVE_MAESTRA = "ADMIN777"; // <--- CAMBIA ESTO POR TU PROPIA CONTRASEÑA
-        let créditos = 0;
-        let esDueño = false;
+        let esAdmin = false;
 
-        function checkOwnerKey() {
-            const input = document.getElementById('prompt').value;
-            const card = document.getElementById('mainCard');
-            const brand = document.getElementById('brandName');
-            const shareBtn = document.getElementById('shareBtn');
-
-            if (input.includes(LLAVE_MAESTRA)) {
-                esDueño = true;
-                créditos = 999999;
-                card.classList.add('owner-glow');
-                brand.innerText = "OWNER MODE";
-                brand.style.color = "#eab308";
-                shareBtn.style.display = "none"; // El dueño no necesita compartir
-                actualizarUI();
-                alert("👑 MODO DUEÑO ACTIVADO: Créditos Infinitos.");
+        function checkAdmin() {
+            const val = document.getElementById('userIdea').value;
+            if (val.includes("ADMIN777")) {
+                esAdmin = true;
+                document.getElementById('card-1').classList.add('owner-glow');
+                document.getElementById('brand').innerHTML = "ROBLOX <span class='text-yellow-500'>OWNER</span>";
+                document.getElementById('creditCount').innerText = "∞";
+                alert("👑 Modo Dueño Activado");
             }
         }
 
-        function compartirParaUno() {
-            window.open('https://api.whatsapp.com/send?text=Mira esta IA de Roblox!', '_blank');
-            setTimeout(() => {
-                créditos += 1; // <--- AHORA SOLO DA 1
-                actualizarUI();
-                alert("✅ Has ganado 1 crédito por compartir.");
-            }, 1000);
+        function irALogin() {
+            if (document.getElementById('userIdea').value.length < 5) return alert("Escribe tu idea primero.");
+            document.getElementById('step-1').classList.add('hidden');
+            document.getElementById('step-2').classList.remove('hidden');
         }
 
-        function actualizarUI() {
-            document.getElementById('creditDisplay').innerText = esDueño ? "∞" : créditos;
+        function irAConfirmar() {
+            document.getElementById('ideaFinal').innerText = `"${document.getElementById('userIdea').value}"`;
+            document.getElementById('step-2').classList.add('hidden');
+            document.getElementById('step-3').classList.remove('hidden');
         }
 
-        function inyectar() {
-            const p = document.getElementById('prompt').value;
-            if (créditos < 1 && !esDueño) return alert("❌ No tienes créditos. Comparte la web.");
-            
-            const btn = document.getElementById('genBtn');
-            btn.disabled = true;
-            btn.innerHTML = `<i class="fa-solid fa-sync animate-spin mr-2"></i> CONECTANDO...`;
-
-            setTimeout(() => {
-                const token = "DEV-" + Math.floor(Math.random() * 90000 + 10000);
-                document.getElementById('tokenID').innerText = token;
-                document.getElementById('injectionPanel').classList.remove('hidden');
-
-                if (!esDueño) créditos -= 1; // Solo descuenta si no eres el dueño
-                actualizarUI();
-
-                btn.disabled = false;
-                btn.innerText = "Generar Proyecto (1 Cr.)";
-                window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
-            }, 2000);
+        function finalizar() {
+            document.getElementById('step-3').classList.add('hidden');
+            document.getElementById('step-final').classList.remove('hidden');
         }
     </script>
 </body>

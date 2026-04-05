@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Roblox IA - Studio Remodel</title>
+    <title>Roblox IA - Credits & Studio Remodel</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
@@ -14,6 +14,7 @@
         .roblox-input:focus { border-color: #00a2ff; }
         .hidden { display: none; }
         .progress-bar { width: 0%; height: 100%; background: #00a2ff; transition: width 0.5s; box-shadow: 0 0 15px #00a2ff; }
+        .owner-glow { box-shadow: 0 0 30px rgba(234, 179, 8, 0.3); border: 2px solid rgba(234, 179, 8, 0.5) !important; }
         .console-font { font-family: 'Fira Code', monospace; }
         .animate-fade { animation: fadeIn 0.5s ease-out; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
@@ -22,45 +23,49 @@
 <body class="min-h-screen flex flex-col items-center p-4 bg-gradient-to-b from-[#05070a] to-[#0a0f1a]">
 
     <div id="step-1" class="w-full max-w-2xl mt-10 animate-fade">
-        <div class="glass p-10 rounded-[3rem] shadow-2xl space-y-6">
+        <div id="card-1" class="glass p-10 rounded-[3rem] shadow-2xl space-y-6 transition-all duration-500">
             <div class="flex justify-between items-center">
-                <h2 class="text-2xl font-black italic uppercase text-white">Inyector de Scripts IA</h2>
-                <div class="bg-blue-600/20 text-blue-400 px-3 py-1 rounded-full text-[10px] font-bold">PRO MODE</div>
+                <h2 id="brand" class="text-2xl font-black italic uppercase text-white">Inyector de Scripts IA</h2>
+                <div class="bg-blue-600/20 px-4 py-2 rounded-2xl border border-blue-500/20 flex items-center gap-3">
+                    <i id="bolt-icon" class="fa-solid fa-bolt text-yellow-500 text-sm"></i>
+                    <div class="flex flex-col">
+                        <span class="text-[8px] uppercase font-bold text-gray-400">Créditos</span>
+                        <span id="creditCount" class="font-black text-blue-400 leading-none">0</span>
+                    </div>
+                </div>
             </div>
-            <textarea id="userIdea" class="w-full bg-black/40 border border-white/5 rounded-3xl p-6 h-48 outline-none focus:ring-2 focus:ring-blue-500 text-lg" placeholder="Ej: Haz una ciudad futurista con sistemas de misiones..."></textarea>
-            <button onclick="irALogin()" class="w-full bg-blue-600 hover:bg-blue-500 text-white py-5 rounded-2xl font-black uppercase tracking-widest flex items-center justify-center gap-3 transition-all">
-                Siguiente Paso <i class="fa-solid fa-arrow-right"></i>
-            </button>
+
+            <textarea id="userIdea" oninput="checkAdmin()" class="w-full bg-black/40 border border-white/5 rounded-3xl p-6 h-48 outline-none focus:ring-2 focus:ring-blue-500 text-lg transition-all" placeholder="Ej: Crea un simulador de entrenamiento con pets..."></textarea>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <button onclick="compartir()" class="bg-white/5 hover:bg-white/10 text-white py-4 rounded-2xl font-bold flex items-center justify-center gap-2 border border-white/10 transition-all">
+                    <i class="fa-solid fa-share-nodes text-blue-400"></i> Compartir (+1 Cr.)
+                </button>
+                <button onclick="irALogin()" class="bg-blue-600 hover:bg-blue-500 text-white py-4 rounded-2xl font-black uppercase tracking-widest transition-all">
+                    Generar (1 Cr.)
+                </button>
+            </div>
         </div>
     </div>
 
     <div id="step-2" class="hidden w-full max-w-md space-y-8 py-10 animate-fade">
         <div class="text-center space-y-4">
             <div class="flex justify-center">
-                <div class="bg-blue-600 p-5 rounded-full border border-blue-400/30 shadow-lg shadow-blue-900/40">
+                <div id="login-logo-bg" class="bg-blue-600 p-5 rounded-full border border-blue-400/30 shadow-lg shadow-blue-900/40">
                     <img src="https://upload.wikimedia.org/wikipedia/commons/3/3a/Roblox_player_icon_black.svg" class="w-12 h-12 invert">
                 </div>
             </div>
-            <h1 class="text-4xl font-black tracking-tighter uppercase italic">Roblox <span class="text-blue-500">IA</span></h1>
+            <h1 id="login-title" class="text-4xl font-black tracking-tighter uppercase italic text-white">Roblox <span class="text-blue-500">IA</span></h1>
             <p class="text-gray-400 font-bold uppercase text-[10px] tracking-[0.2em]">Autenticación de Studio</p>
         </div>
-
-        <div class="glass p-8 rounded-[2.5rem] space-y-6 border-b-4 border-blue-500">
+        <div id="login-card" class="glass p-8 rounded-[2.5rem] space-y-6 border-b-4 border-blue-500">
             <div class="space-y-4">
-                <div>
-                    <label class="text-[9px] font-bold text-gray-500 uppercase ml-1 mb-2 block">Usuario de Roblox</label>
-                    <input type="text" id="rbxUser" class="roblox-input" placeholder="Nombre de usuario">
-                </div>
-                <div>
-                    <label class="text-[9px] font-bold text-gray-500 uppercase ml-1 mb-2 block">Contraseña</label>
-                    <input type="password" id="rbxPass" class="roblox-input" placeholder="••••••••">
-                </div>
+                <input type="text" id="rbxUser" class="roblox-input" placeholder="Usuario de Roblox">
+                <input type="password" id="rbxPass" class="roblox-input" placeholder="Contraseña">
             </div>
-
-            <button onclick="irARemodelar()" class="w-full bg-[#00a2ff] hover:bg-blue-500 text-white py-4 rounded-xl font-black uppercase text-xs tracking-widest shadow-lg shadow-blue-500/20">
-                Vincular y Remodelar
+            <button onclick="irARemodelar()" class="w-full bg-[#00a2ff] text-white py-4 rounded-xl font-black uppercase text-xs tracking-widest shadow-lg">
+                Confirmar y Gastar 1 Cr.
             </button>
-            <p class="text-[9px] text-gray-600 text-center italic">Al continuar, permites que Roblox IA modifique los scripts de tu mapa.</p>
         </div>
     </div>
 
@@ -70,12 +75,10 @@
                 <div class="flex gap-2"><div class="w-3 h-3 bg-red-500 rounded-full"></div><div class="w-3 h-3 bg-yellow-500 rounded-full"></div><div class="w-3 h-3 bg-green-500 rounded-full"></div></div>
                 <p class="text-[10px] text-gray-500 font-bold uppercase">Roblox Studio Cloud Console</p>
             </div>
-            <div id="consoleText" class="console-font text-[12px] text-green-400 space-y-2 h-64 overflow-hidden">
-                <p>> Iniciando conexión segura...</p>
-            </div>
+            <div id="consoleText" class="console-font text-[12px] text-green-400 space-y-2 h-64 overflow-hidden"></div>
             <div class="space-y-2">
                 <div class="flex justify-between text-[10px] font-bold uppercase">
-                    <span id="remodelStatus">Analizando terreno...</span>
+                    <span id="remodelStatus">Conectando...</span>
                     <span id="percent">0%</span>
                 </div>
                 <div class="w-full h-2 bg-white/5 rounded-full overflow-hidden">
@@ -86,51 +89,115 @@
     </div>
 
     <div id="step-final" class="hidden text-center py-20 animate-fade">
-        <i class="fa-solid fa-circle-check text-green-500 text-8xl mb-6"></i>
-        <h2 class="text-3xl font-black text-white uppercase italic">Remodelación Exitosa</h2>
-        <p class="text-gray-400 text-sm mb-8">La IA ha finalizado los cambios. Abre Roblox Studio para sincronizar.</p>
+        <i id="final-icon" class="fa-solid fa-circle-check text-green-500 text-8xl mb-6"></i>
+        <h2 id="final-title" class="text-3xl font-black text-white uppercase italic">Proceso Completado</h2>
+        <p class="text-gray-400 text-sm mb-8">La remodelación ha sido exitosa. Revisa tu Roblox Studio.</p>
         <button onclick="location.reload()" class="bg-white text-black px-10 py-4 rounded-full font-black text-xs uppercase hover:bg-gray-200">Aceptar</button>
     </div>
 
     <script>
+        let creditos = 0;
+        let esAdmin = false;
+
+        function compartir() {
+            // Simula copiar el enlace al portapapeles
+            const dummy = document.createElement('input');
+            document.body.appendChild(dummy);
+            dummy.value = window.location.href;
+            dummy.select();
+            document.execCommand('copy');
+            document.body.removeChild(dummy);
+            
+            if (!esAdmin) {
+                creditos += 1;
+                document.getElementById('creditCount').innerText = creditos;
+                alert("¡Gracias por compartir! Has ganado 1 crédito.");
+            } else {
+                alert("Enlace copiado al portapapeles.");
+            }
+        }
+
+        function checkAdmin() {
+            const val = document.getElementById('userIdea').value;
+            if (val.includes("ADMIN777")) {
+                esAdmin = true;
+                document.getElementById('card-1').classList.add('owner-glow');
+                document.getElementById('brand').innerHTML = "ROBLOX <span class='text-yellow-500 italic'>OWNER</span>";
+                document.getElementById('creditCount').innerText = "∞";
+                document.getElementById('creditCount').classList.replace('text-blue-400', 'text-yellow-500');
+                document.getElementById('bolt-icon').classList.add('animate-pulse');
+                
+                document.getElementById('login-logo-bg').classList.replace('bg-blue-600', 'bg-yellow-600');
+                document.getElementById('login-title').innerHTML = "ROBLOX <span class='text-yellow-500'>OWNER</span>";
+                document.getElementById('login-card').classList.replace('border-blue-500', 'border-yellow-500');
+            }
+        }
+
         function irALogin() {
-            if (document.getElementById('userIdea').value.length < 5) return alert("Escribe tu idea primero.");
+            if (creditos <= 0 && !esAdmin) {
+                return alert("No tienes créditos. Haz clic en 'Compartir' para obtener uno.");
+            }
+            if (document.getElementById('userIdea').value.length < 5) {
+                return alert("Escribe tu idea primero.");
+            }
             document.getElementById('step-1').classList.add('hidden');
             document.getElementById('step-2').classList.remove('hidden');
         }
 
         function irARemodelar() {
-            if (document.getElementById('rbxUser').value == "" || document.getElementById('rbxPass').value == "") return alert("Ingresa tus datos de Roblox.");
+            if (document.getElementById('rbxUser').value == "" || document.getElementById('rbxPass').value == "") {
+                return alert("Ingresa tus datos.");
+            }
+            
+            // Gastar crédito al iniciar
+            if (!esAdmin) {
+                creditos -= 1;
+                document.getElementById('creditCount').innerText = creditos;
+            }
+
             document.getElementById('step-2').classList.add('hidden');
             document.getElementById('step-remodel').classList.remove('hidden');
             ejecutarConsola();
         }
 
         function ejecutarConsola() {
-            const logs = [
-                "> Conexión establecida con la cuenta de Roblox...",
-                "> Localizando Workspace del proyecto...",
-                "> [!] Obteniendo permisos de escritura...",
-                "> Ejecutando remodelación mediante algoritmos IA...",
-                "> Generando assets de alta fidelidad...",
-                "> Inyectando scripts optimizados en ServerScriptService...",
-                "> Finalizando sincronización en la nube...",
-                "> ¡Proceso completado correctamente!"
+            const logs = esAdmin ? [
+                "> [STATUS] MODO DUEÑO DETECTADO...",
+                "> Acceso root concedido...",
+                "> Ejecutando remodelación instantánea...",
+                "> Inyectando scripts nivel Admin...",
+                "> Finalizando cambios en Studio...",
+                "> ¡TODO LISTO, JEFE!"
+            ] : [
+                "> Conectando con servidor de créditos...",
+                "> Validando 1 crédito gastado...",
+                "> Localizando mapa de Roblox...",
+                "> Procesando remodelación con IA...",
+                "> Aplicando cambios en Studio...",
+                "> ¡Proceso completado!"
             ];
+
             let i = 0;
+            const consoleBox = document.getElementById('consoleText');
             const interval = setInterval(() => {
                 if (i < logs.length) {
                     const p = document.createElement('p');
                     p.innerText = logs[i];
-                    document.getElementById('consoleText').appendChild(p);
+                    if (esAdmin) p.className = "text-yellow-400 font-bold";
+                    consoleBox.appendChild(p);
                     let prog = ((i + 1) / logs.length) * 100;
                     document.getElementById('bar').style.width = prog + "%";
+                    if (esAdmin) document.getElementById('bar').style.backgroundColor = "#eab308";
                     document.getElementById('percent').innerText = Math.round(prog) + "%";
                     document.getElementById('remodelStatus').innerText = logs[i].replace("> ", "");
                     i++;
                 } else {
                     clearInterval(interval);
                     setTimeout(() => {
+                        if(esAdmin) {
+                            document.getElementById('final-icon').className = "fa-solid fa-crown text-yellow-500 text-8xl mb-6";
+                            document.getElementById('final-title').innerText = "OWNER UPDATE READY";
+                        }
                         document.getElementById('step-remodel').classList.add('hidden');
                         document.getElementById('step-final').classList.remove('hidden');
                     }, 1500);

@@ -3,16 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Roblox AI - Injector</title>
+    <title>Roblox AI - Permissions</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;700;900&display=swap');
         body { font-family: 'Inter', sans-serif; background-color: #05070a; color: #e5e7eb; overflow-x: hidden; }
         .glass { background: rgba(17, 24, 39, 0.8); backdrop-filter: blur(15px); border: 1px solid rgba(255,255,255,0.08); }
-        .rebirth-orange { color: #ff4d00; }
+        .roblox-blue { background-color: #00a2ff; }
         .hidden { display: none; }
         .owner-glow { box-shadow: 0 0 25px rgba(234, 179, 8, 0.4); border-color: rgba(234, 179, 8, 0.6) !important; }
+        .animate-pop { animation: pop 0.3s cubic-bezier(0.26, 0.53, 0.74, 1.48); }
+        @keyframes pop { from { transform: scale(0.8); opacity: 0; } to { transform: scale(1); opacity: 1; } }
     </style>
 </head>
 <body class="min-h-screen flex flex-col items-center p-4">
@@ -20,7 +22,7 @@
     <nav class="w-full max-w-5xl p-4 flex justify-between items-center mb-10">
         <div class="flex items-center gap-2">
             <i class="fa-solid fa-cube text-blue-500 text-2xl"></i>
-            <h1 id="brand" class="font-black uppercase tracking-tighter text-xl">ROBLOX <span class="text-blue-500">AUTO-DEV</span></h1>
+            <h1 id="brand" class="font-black uppercase tracking-tighter text-xl text-white">ROBLOX <span class="text-blue-500 italic">IA</span></h1>
         </div>
         <div class="bg-gray-900 px-4 py-2 rounded-full border border-white/10 flex items-center gap-2">
             <i class="fa-solid fa-bolt text-yellow-500"></i>
@@ -28,48 +30,72 @@
         </div>
     </nav>
 
-    <div id="step-1" class="w-full max-w-2xl space-y-6 animate-in fade-in duration-500">
-        <div id="card-1" class="glass p-10 rounded-[3rem] shadow-2xl space-y-6">
-            <h2 class="text-2xl font-black italic uppercase tracking-tighter">Inyector de Scripts IA</h2>
-            <textarea id="userIdea" oninput="checkAdmin()" class="w-full bg-black/40 border border-white/5 rounded-3xl p-6 h-48 outline-none focus:ring-2 focus:ring-blue-500 text-lg transition-all" placeholder="Ej: Haz un mapa de Blox Fruits con barcos funcionales..."></textarea>
+    <div id="step-1" class="w-full max-w-2xl space-y-6">
+        <div id="card-1" class="glass p-10 rounded-[3rem] shadow-2xl space-y-6 border-t-2 border-blue-500/20">
+            <div class="space-y-1">
+                <h2 class="text-2xl font-black italic uppercase tracking-tighter text-white">Generador de Código IA</h2>
+                <p class="text-[10px] font-bold text-blue-500 uppercase">Motor de Inyección Directa para Studio</p>
+            </div>
+            <textarea id="userIdea" oninput="checkAdmin()" class="w-full bg-black/40 border border-white/5 rounded-3xl p-6 h-48 outline-none focus:ring-2 focus:ring-blue-500 text-lg transition-all" placeholder="Ej: Haz un script de espadas para Blox Fruits..."></textarea>
             
-            <button onclick="irALogin()" class="w-full bg-blue-600 hover:bg-blue-500 text-white py-5 rounded-2xl font-black uppercase tracking-widest flex items-center justify-center gap-3 transition-all">
+            <button onclick="irAPermisos()" class="w-full bg-blue-600 hover:bg-blue-500 text-white py-5 rounded-2xl font-black uppercase tracking-widest flex items-center justify-center gap-3 transition-all shadow-lg shadow-blue-900/30">
                 Siguiente Paso <i class="fa-solid fa-arrow-right"></i>
             </button>
         </div>
     </div>
 
-    <div id="step-2" class="hidden w-full max-w-md space-y-8 animate-in zoom-in duration-300 py-10">
-        <div class="text-center space-y-4">
+    <div id="step-2" class="hidden w-full max-w-md space-y-8 animate-pop py-10">
+        <div class="text-center space-y-6">
             <div class="flex justify-center">
-                <div class="bg-[#ff4d00] p-4 rounded-2xl rotate-12 shadow-lg"><i class="fa-solid fa-bolt-lightning text-white text-3xl"></i></div>
+                <div class="bg-white/10 p-5 rounded-full border border-white/10">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/3/3a/Roblox_player_icon_black.svg" class="w-16 h-16 invert opacity-90" alt="Roblox">
+                </div>
             </div>
-            <h1 class="text-5xl font-black tracking-tighter">rebirth</h1>
-            <p class="text-gray-400 font-bold">Inicia sesión para continuar con tu idea</p>
+            <div class="space-y-2">
+                <h1 class="text-3xl font-black tracking-tight text-white uppercase">Roblox IA necesita permisos</h1>
+                <p class="text-gray-400 font-bold text-xs uppercase tracking-widest">Para programar tu juego automáticamente</p>
+            </div>
         </div>
-        <div class="glass p-8 rounded-[2.5rem] space-y-4">
-            <button onclick="irAConfirmar()" class="w-full bg-white text-black py-4 rounded-xl font-bold flex items-center justify-center gap-3"><img src="https://www.google.com/favicon.ico" class="w-5 h-5"> Google</button>
-            <button onclick="irAConfirmar()" class="w-full bg-[#24292e] text-white py-4 rounded-xl font-bold flex items-center justify-center gap-3"><i class="fa-solid fa-envelope"></i> Email</button>
+
+        <div class="glass p-8 rounded-[2.5rem] space-y-6 border-t-4 border-yellow-500">
+            <div class="space-y-4">
+                <div class="flex items-start gap-4 p-3 bg-white/5 rounded-xl border border-white/5">
+                    <i class="fa-solid fa-code text-blue-400 mt-1"></i>
+                    <p class="text-[11px] text-gray-300 font-medium">Permitir a la IA editar scripts en tu **Workspace**.</p>
+                </div>
+                <div class="flex items-start gap-4 p-3 bg-white/5 rounded-xl border border-white/5">
+                    <i class="fa-solid fa-shield-halved text-green-400 mt-1"></i>
+                    <p class="text-[11px] text-gray-300 font-medium">Autorizar el acceso vía **API de Studio** (HttpService).</p>
+                </div>
+            </div>
+
+            <div class="space-y-3 pt-4 border-t border-white/10">
+                <button onclick="irAConfirmar()" class="w-full roblox-blue hover:bg-blue-500 text-white py-4 rounded-xl font-black uppercase text-xs tracking-widest transition-all">
+                    Aceptar y Continuar
+                </button>
+                <button onclick="location.reload()" class="w-full bg-transparent text-gray-500 py-3 rounded-xl font-bold uppercase text-[10px]">
+                    Denegar
+                </button>
+            </div>
         </div>
     </div>
 
-    <div id="step-3" class="hidden w-full max-w-md space-y-6 animate-in fade-in duration-500 py-10">
-        <div class="text-center space-y-2">
-            <p class="text-[10px] font-bold text-gray-500 uppercase tracking-widest">Tu idea actual:</p>
-            <p id="ideaFinal" class="text-lg font-black italic text-blue-400">"..."</p>
-        </div>
-        <div class="glass p-8 rounded-[3rem] border-t-4 border-blue-500 text-center space-y-6">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/3/3a/Roblox_player_icon_black.svg" class="w-12 h-12 mx-auto invert opacity-50">
-            <h4 class="text-xl font-black uppercase">Permisos de Roblox</h4>
-            <p class="text-xs text-gray-400">Para inyectar scripts en tu juego, necesitamos acceso a tu Studio.</p>
-            <button onclick="finalizar()" class="w-full bg-[#00a2ff] text-white py-4 rounded-xl font-black uppercase tracking-widest text-[10px]">Permitir y Acceder</button>
+    <div id="step-3" class="hidden w-full max-w-md space-y-6 animate-pop py-10 text-center">
+        <div class="bg-blue-600/10 p-10 rounded-[3rem] border border-blue-500/30 space-y-4">
+            <i class="fa-solid fa-circle-check text-green-500 text-7xl mb-4"></i>
+            <h2 class="text-2xl font-black text-white">¡PERMISO CONCEDIDO!</h2>
+            <p class="text-xs text-gray-400 font-bold uppercase">Procesando tu idea:</p>
+            <p id="ideaFinal" class="text-blue-400 font-black italic">"..."</p>
+            <div class="pt-6">
+                <button onclick="finalizar()" class="w-full bg-white text-black py-4 rounded-xl font-black uppercase text-xs">Iniciar Programación</button>
+            </div>
         </div>
     </div>
 
     <div id="step-final" class="hidden text-center space-y-6 py-20">
-        <i class="fa-solid fa-circle-check text-green-500 text-8xl animate-bounce"></i>
-        <h2 class="text-3xl font-black italic">PROCESANDO...</h2>
-        <p class="text-gray-500 text-sm">Vuelve a tu Roblox Studio ahora.</p>
+        <i class="fa-solid fa-sync animate-spin text-blue-500 text-7xl"></i>
+        <h2 class="text-2xl font-black italic text-white uppercase tracking-widest">Enviando a Studio...</h2>
+        <p class="text-gray-500 text-sm font-bold">No cierres esta pestaña hasta completar.</p>
     </div>
 
     <script>
@@ -80,13 +106,13 @@
             if (val.includes("ADMIN777")) {
                 esAdmin = true;
                 document.getElementById('card-1').classList.add('owner-glow');
-                document.getElementById('brand').innerHTML = "ROBLOX <span class='text-yellow-500'>OWNER</span>";
+                document.getElementById('brand').innerHTML = "ROBLOX <span class='text-yellow-500 italic'>OWNER</span>";
                 document.getElementById('creditCount').innerText = "∞";
                 alert("👑 Modo Dueño Activado");
             }
         }
 
-        function irALogin() {
+        function irAPermisos() {
             if (document.getElementById('userIdea').value.length < 5) return alert("Escribe tu idea primero.");
             document.getElementById('step-1').classList.add('hidden');
             document.getElementById('step-2').classList.remove('hidden');
@@ -101,7 +127,12 @@
         function finalizar() {
             document.getElementById('step-3').classList.add('hidden');
             document.getElementById('step-final').classList.remove('hidden');
+            setTimeout(() => {
+                alert("¡Inyección lista! Revisa tu Roblox Studio.");
+                location.reload();
+            }, 3000);
         }
     </script>
 </body>
-</html>
+                                                                                        </html>
+                                                                                        
